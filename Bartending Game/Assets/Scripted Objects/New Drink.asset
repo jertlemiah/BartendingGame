@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 912285527ee447841b2f792c9a4fd77f, type: 3}
+  m_Name: New Drink
+  m_EditorClassIdentifier: 
+  glassType: {fileID: 11400000, guid: 669562eb116ea5b41b40c6a5f2b9136e, type: 2}
+  LiquidsList: []
