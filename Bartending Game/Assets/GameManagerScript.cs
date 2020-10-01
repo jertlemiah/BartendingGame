@@ -28,7 +28,11 @@ public class GameManagerScript : MonoBehaviour
         if(heldObject != null)
         {
             Vector2 cameraPos = Camera.main.ScreenToWorldPoint(controls.Player.MousePosition.ReadValue<Vector2>());
-            heldObject.transform.position = new Vector3(cameraPos.x, cameraPos.y, 0);
+            float xOffset = heldObject.GetComponent<DrinkBottle>().xOffset;
+            float yOffset = heldObject.GetComponent<DrinkBottle>().yOffset;
+            heldObject.transform.position = new Vector3(cameraPos.x + xOffset, cameraPos.y + yOffset, 0);
+            //Rigidbody2D rb = heldObject.GetComponent<Rigidbody2D>();
+            //heldObject.GetComponent<Rigidbody2D>().MovePosition(new Vector3(cameraPos.x, cameraPos.y, 0));
         }
     }
 

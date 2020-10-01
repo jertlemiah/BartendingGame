@@ -10,6 +10,8 @@ public class DrinkBottle : MonoBehaviour
     public LiquidType liquidType;
     public double volumeAddedPerClick = 0.5;
 
+    public float xOffset = 0, yOffset = 0;
+
     private bool mouseOver = false;
     private float waitTime = 0.2f; //wait time befor reacting
     private float downTime; //internal time from when the key is pressed

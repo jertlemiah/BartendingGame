@@ -511,6 +511,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: 3027cad9dc92e684088c7a2127849f19, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 0
 --- !u!61 &94583821
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -803,6 +805,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: 22c830eb8b1c0e54aab77fb2bdf05dd9, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 4
 --- !u!61 &129301420
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1102,6 +1106,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: 5cdb616acf9d78a479cc5615bcc0180a, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 0
 --- !u!61 &174574712
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1279,7 +1285,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 14
+  m_SortingOrder: 2
   m_Sprite: {fileID: 3451318003776188656, guid: 02c27945d972aa042bf30010a7f3d94c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1535,6 +1541,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: ad562c6a46141284eadc663cbabc26db, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 0
 --- !u!61 &560357895
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2103,6 +2111,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: 9a3039ba66e46bc43825a03ce393ef52, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 0
 --- !u!61 &822892151
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2341,6 +2351,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: 679cd9e79c53fd241b7e5e568ec5bb4f, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: -5
 --- !u!61 &885713765
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2480,6 +2492,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: ad8c43152c929c74db0760a8fbefa031, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 4
 --- !u!61 &924283655
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2552,7 +2566,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.8
+  m_Intensity: 0.95
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000813a4887
   m_LightCookieSprite: {fileID: 0}
@@ -2800,6 +2814,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: 1527ea5e18c6eb94aa9885b9051a3da2, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 0
 --- !u!70 &1258399524
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2960,6 +2976,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: 38d754a65aa856d4bba7622c42015f46, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 0
 --- !u!61 &1312032422
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3099,6 +3117,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: a036e405e728ea44088db9cfa487e120, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 0
 --- !u!61 &1394931725
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3238,6 +3258,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: 05fda944e58d5ce418322b037a989653, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 0
 --- !u!61 &1537622892
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3476,6 +3498,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: 7238fb372b2098f439fb0003be1fe698, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 0
 --- !u!61 &1557972425
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3885,6 +3909,8 @@ MonoBehaviour:
   currentGlass: {fileID: 162775176}
   liquidType: {fileID: 11400000, guid: cae42a14cfe6af14b9dfd844190827b8, type: 2}
   volumeAddedPerClick: 0.5
+  xOffset: 0
+  yOffset: 0
 --- !u!70 &2040607036
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -3990,7 +4016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.512
+  m_FalloffIntensity: 0.837
   m_Color: {r: 0.9433962, g: 0.341075, b: 0.031149892, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0.101
@@ -4004,7 +4030,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 8.82
+  m_PointLightOuterRadius: 41.81
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -4025,7 +4051,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2054118119}
   m_LocalRotation: {x: -0, y: -0, z: -0.02104242, w: 0.9997786}
-  m_LocalPosition: {x: -0.6744001, y: -2.9224, z: 0}
+  m_LocalPosition: {x: 4.25, y: 13.5625, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
