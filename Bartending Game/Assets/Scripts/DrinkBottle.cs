@@ -8,7 +8,7 @@ public class DrinkBottle : MonoBehaviour
 
     public GlassContents currentGlass;
     public LiquidType liquidType;
-    public double volumeAddedPerClick = 0.5;
+    public double volumeAddedPerClick = 0.1;
 
     public float xOffset = 0, yOffset = 0;
 
@@ -55,6 +55,16 @@ public class DrinkBottle : MonoBehaviour
         {
             currentGlass.AddLiquid(liquidType, volumeAddedPerClick);
             downTime += waitTime;
+        }
+    }
+
+    public void PourBottle(double volumeAddedPerClick)
+    {
+        if ((Time.time > downTime + waitTime) && mouseOver)
+        {
+            Debug.Log("Adding " + volumeAddedPerClick + " of " + liquidType);
+            currentGlass.AddLiquid(liquidType, volumeAddedPerClick);
+            downTime = Time.time + waitTime;
         }
     }
 }

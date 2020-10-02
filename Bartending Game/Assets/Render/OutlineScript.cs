@@ -8,6 +8,7 @@ public class OutlineScript : MonoBehaviour
     Color tempColor;
     public InputMaster controls;
     public bool overrideOutline = false;
+    public SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -16,41 +17,44 @@ public class OutlineScript : MonoBehaviour
 
     private void Start()
     {
-        
-        tempColor = GetComponent<Renderer>().material.GetColor("_Color");
+        if(spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+        tempColor = spriteRenderer.material.GetColor("_Color");
         tempColor.a = 0;
-        GetComponent<Renderer>().material.SetColor("_Color", tempColor);
+        spriteRenderer.material.SetColor("_Color", tempColor);
     }
 
     private void OnMouseOver()
     {
         if(overrideOutline == false)
         {
-            Debug.Log("Mouse hovering over bottle");
+            //Debug.Log("Mouse hovering over bottle");
             EnableHighlight();
         }
     }
 
     public void EnableHighlight()
     {
-        tempColor = GetComponent<Renderer>().material.GetColor("_Color");
+        tempColor = spriteRenderer.material.GetColor("_Color");
         tempColor.a = 1;
-        GetComponent<Renderer>().material.SetColor("_Color", tempColor);
+        spriteRenderer.material.SetColor("_Color", tempColor);
     }
 
     private void OnMouseExit()
     {
         if(overrideOutline == false)
         {
-            Debug.Log("Mouse stop hovering over bottle");
+            //Debug.Log("Mouse stop hovering over bottle");
             DisableHighlight();
         }
     }
 
     public void DisableHighlight()
     {
-        tempColor = GetComponent<Renderer>().material.GetColor("_Color");
+        tempColor = spriteRenderer.material.GetColor("_Color");
         tempColor.a = 0;
-        GetComponent<Renderer>().material.SetColor("_Color", tempColor);
+        spriteRenderer.material.SetColor("_Color", tempColor);
     }
 }
