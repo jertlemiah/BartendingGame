@@ -67,4 +67,10 @@ public class DrinkBottle : MonoBehaviour
             downTime = Time.time + waitTime;
         }
     }
+
+    public void SetTotalLiquid(double newVolume)
+    {
+        currentGlass.EmptyContents();
+        currentGlass.AddLiquid(liquidType, newVolume);
+    }
 }

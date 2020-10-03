@@ -51,6 +51,15 @@ public class GameManagerScript : MonoBehaviour
 
     }
 
+    public void SetTotalLiquid(double newVolume)
+    {
+        if (heldObject != null && heldObject.tag == "Bottle")
+        {
+            heldObject.GetComponent<DrinkBottle>().SetTotalLiquid(newVolume);
+
+        }
+    }
+
     public void UseObject()
     {
         Debug.Log("UseObject called");
