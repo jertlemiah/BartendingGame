@@ -806,7 +806,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296434137}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1875, y: -5.75, z: 0}
+  m_LocalPosition: {x: -3.0625, y: -8.375, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1296280723}
@@ -2092,7 +2092,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 4983035586910250089, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
+  m_Sprite: {fileID: -2517746000051645093, guid: cc7552f8af4c4154abe6530a4fdf0cb3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2656,7 +2656,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1565393623}
-  - component: {fileID: 1565393622}
   - component: {fileID: 1565393621}
   - component: {fileID: 1565393620}
   - component: {fileID: 1565393619}
@@ -2681,17 +2680,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glassType: {fileID: 11400000, guid: 30b697814c079a242ab9c9118803a584, type: 2}
-  m_SpriteRenderer: {fileID: 0}
-  OverrideLevel: 0
-  spriteList: []
-  maxVolume: 1
+  OverrideLevel: 1
+  spriteList:
+  - {fileID: 4386495801929487948, guid: cc7552f8af4c4154abe6530a4fdf0cb3, type: 3}
+  - {fileID: 7431459168009904723, guid: cc7552f8af4c4154abe6530a4fdf0cb3, type: 3}
+  - {fileID: 4959282734718321257, guid: cc7552f8af4c4154abe6530a4fdf0cb3, type: 3}
+  - {fileID: 6078807204490534122, guid: cc7552f8af4c4154abe6530a4fdf0cb3, type: 3}
+  - {fileID: -2517746000051645093, guid: cc7552f8af4c4154abe6530a4fdf0cb3, type: 3}
+  rendererList:
+  - {fileID: 1327033617}
+  maxVolume: 4
   currentVolume: 0
   currentVolumeLayer: 0
   alphaValue: 0.5
-  LiquidsList: []
-  Color_Mixed: {r: 1, g: 1, b: 1, a: 1}
-  OverrideColor: 0
-  Color_Override: {r: 1, g: 1, b: 1, a: 1}
+  OverrideColor: 1
+  Color_Override: {r: 0, g: 0, b: 0, a: 0}
 --- !u!61 &1565393619
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2750,73 +2753,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1565393622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565393617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50cfd08c2f149f44d933c308b0212070, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  glassType: {fileID: 11400000, guid: 30b697814c079a242ab9c9118803a584, type: 2}
-  m_SpriteRenderer: {fileID: 1327033617}
-  OverrideLevel: 0
-  spriteList:
-  - {fileID: 4983035586910250089, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -6143619009189421996, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -2788545647566403974, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 9111562304401853514, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 5264897990156062002, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 990756527509167496, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -5757901493408212073, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 6716085192061751117, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 8329293136872693160, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 6174626683062014738, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 247371614242971980, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -974875138740446915, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -749924404694992182, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 1394953036832650509, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 3700009154491920881, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 3502924603424508826, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -1836167011461191735, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -8550596855840270691, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 6921928632425056663, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 7690841234096975568, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 1079016867325311392, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 2927779792617323717, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -2375706577190216402, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -3029053568481865962, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -8845988128629771548, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 8119802359167823151, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 7071541103851451045, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -100189009298055022, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -2152830399450952476, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 6876161296218235592, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 2128374901640084855, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -3242985634130373064, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 2230419378433140903, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -6123719179499370123, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 4587738335613790831, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -2335057125482694837, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -2573665008750193329, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -1650363247505144511, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 1883183466894507768, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -7445710101642725671, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -7417895114125161623, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: -8786671057858096705, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  - {fileID: 6666825628109217124, guid: 635a3b4dd40bae84b960f33f2f8bbf8e, type: 3}
-  maxVolume: 2
-  currentVolume: 0
-  currentVolumeLayer: 0
-  alphaValue: 0.5
-  LiquidsList: []
-  Color_Mixed: {r: 1, g: 1, b: 1, a: 1}
-  OverrideColor: 0
-  Color_Override: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &1565393623
 Transform:
   m_ObjectHideFlags: 0
@@ -2825,7 +2761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565393617}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1875, y: -5.75, z: 0}
+  m_LocalPosition: {x: 1.8125, y: 1.4375, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1964797385}

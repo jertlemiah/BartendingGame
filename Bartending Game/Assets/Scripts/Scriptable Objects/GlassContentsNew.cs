@@ -4,6 +4,128 @@ using UnityEngine;
 
 public class GlassContentsNew : MonoBehaviour
 {
+
+    public class LiquidsCollection
+    {
+        //public List<Liquid> LiquidsList = new List<Liquid>();
+        public Dictionary<LiquidType,Liquid> LiquidsDict = new Dictionary<LiquidType, Liquid>();
+        public Color ColorMixed = Color.white;
+        public List<LiquidType> LiquidTypes = new List<LiquidType>();
+        public double CombinedVolume = 0;
+
+        public LiquidsCollection(){ }
+
+        public LiquidsCollection(Liquid liquid)
+        {
+            AddLiquid(liquid, -1);
+        }
+
+        public void EmptyContents()
+        {
+            LiquidsDict.Clear();
+            LiquidTypes.Clear();
+            CombinedVolume = 0;
+        }
+
+        public bool SameLiquidMix(LiquidsCollection liquidsCollection)
+        {
+            return SameLiquidMix(liquidsCollection.LiquidTypes);
+        }
+
+        public bool SameLiquidMix(List<LiquidType> liquidTypes)
+        {
+            return LiquidTypes.TrueForAll(itm => liquidTypes.Contains(itm));
+        }
+
+        ///<summary>
+        /// This function is going to cause crazy rounding problems
+        ///</summary>
+        public void ResizeTotalVolume(double newTotalVolume)
+        {
+            //ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+
+            foreach (KeyValuePair<LiquidType, Liquid> entry in LiquidsDict)
+            {
+                double percentVol = entry.Value.volume / CombinedVolume;
+                entry.Value.volume = percentVol * newTotalVolume;
+            }
+            UpdateInfo();
+        }
+
+        public void Combine(LiquidsCollection newLiquidsCollection, double remainingSpace)
+        {
+            if(newLiquidsCollection.CombinedVolume > remainingSpace)
+            {
+                ResizeTotalVolume(remainingSpace);
+            }
+            Dictionary<LiquidType, Liquid> newLiquidsDict = newLiquidsCollection.LiquidsDict;
+
+            foreach (KeyValuePair<LiquidType,Liquid> entry in newLiquidsDict)
+            {
+                AddLiquid(entry.Value, remainingSpace);
+                remainingSpace -= entry.Value.volume;
+            }            
+        }
+
+        ///<summary>
+        ///Adds the newLiquid to the LiquidsDict with regards to the remainingSpace. 
+        ///If remainingSpace = -1, this condition is ignored.
+        ///</summary>
+        public void AddLiquid(Liquid newLiquid, double remainingSpace)
+        {
+            // If there's no space, don't do anything
+            if (remainingSpace == 0)
+                return;
+
+            // Ignore volume requirements
+            else if (remainingSpace == -1) { }
+            
+            // If the incoming volume is greater than remaining space, change vol to remaining vol
+            else
+            {
+                if (newLiquid.volume > remainingSpace)
+                    newLiquid.volume = remainingSpace;
+            }
+
+            // Handle if liquid type already exists or not
+            if (LiquidsDict.ContainsKey(newLiquid.liquidType))
+                LiquidsDict[newLiquid.liquidType].volume += newLiquid.volume;
+            else
+                LiquidsDict.Add(newLiquid.liquidType, newLiquid);
+
+            // Update stats according to the new levels
+            UpdateInfo();
+        }
+
+        ///<summary>
+        ///Updates the stats for this particular liquid collection, such as CombinedVolume, ColorMixed, and LiquidTypes
+        ///</summary>
+        public void UpdateInfo()
+        {
+            CombinedVolume = 0;
+            float red = 0, green = 0, blue = 0, alpha = 0;
+
+            foreach (KeyValuePair<LiquidType, Liquid> entry in LiquidsDict)
+            {
+                Liquid liquid = entry.Value;
+
+                CombinedVolume += liquid.volume;
+                red += liquid.liquidType.liquidColor.r * (float)liquid.volume;
+                blue += liquid.liquidType.liquidColor.b * (float)liquid.volume;
+                green += liquid.liquidType.liquidColor.g * (float)liquid.volume;
+                alpha += liquid.liquidType.liquidColor.a * (float)liquid.volume;
+            }
+            ColorMixed = new Color(
+                red / (float)CombinedVolume,
+                green / (float)CombinedVolume,
+                blue / (float)CombinedVolume, 
+                alpha / (float)CombinedVolume);
+
+            LiquidTypes = new List<LiquidType>(LiquidsDict.Keys);
+        }
+    }
+
+
     public GlassType glassType;
     //public SpriteRenderer m_SpriteRenderer;
 
@@ -17,78 +139,11 @@ public class GlassContentsNew : MonoBehaviour
 
     public float alphaValue = 0.5f;
 
-    public List<Liquid> LiquidsList = new List<Liquid>();//Liquid[] liquids;
     public List<LiquidsCollection> LiquidsCollList = new List<LiquidsCollection>();
 
-
-    public Color Color_Mixed = Color.white; // The color from mixing liquids
     public bool OverrideColor = false;
     public Color Color_Override = Color.white;        // The override color
     float m_Red, m_Blue, m_Green;       // The values for the sliders for controlling the override color
-
-    public class LiquidsCollection
-    {
-        public List<Liquid> LiquidsList = new List<Liquid>();
-        public Color ColorMixed = Color.white;
-        public List<LiquidType> LiquidTypes = new List<LiquidType>();
-        public double currentVolume = 0;
-
-        public void EmptyContents()
-        {
-            LiquidsList.Clear();
-            LiquidTypes.Clear();
-            currentVolume = 0;
-        }
-        public void AddLiquid(LiquidType liquidType, double volumeAdded)
-        {
-            if (currentVolume >= maxVolume)
-                return;
-
-            //
-            if (LiquidsList != null)
-            {
-                for (int i = 0; i < LiquidsList.Count; i++)
-                {
-                    if (LiquidsList[i].liquidType == liquidType)
-                    {
-                        LiquidsList[i].volume += volumeAdded;
-                        return;
-                    }
-                }
-            }
-            // else // liquids is null, or liquidType is not in list
-            {
-                Liquid addedLiquid = new Liquid(liquidType, volumeAdded);
-                LiquidsList.Add(addedLiquid);
-            }
-        }
-
-        public void UpdateCall()
-        {
-            double newVolume = 0;
-            float red = 0, green = 0, blue = 0;
-
-            if (LiquidsList != null)// && liquids[0] != null)
-            {
-
-                //Debug.Log("Made it to if statement");
-                for (int i = 0; i < LiquidsList.Count; i++)
-                {
-                    if (LiquidsList[i].liquidType != null)
-                    {
-                        newVolume += LiquidsList[i].volume;
-                        red += LiquidsList[i].liquidType.liquidColor.r * (float)LiquidsList[i].volume;
-                        blue += LiquidsList[i].liquidType.liquidColor.b * (float)LiquidsList[i].volume;
-                        green += LiquidsList[i].liquidType.liquidColor.g * (float)LiquidsList[i].volume;
-                    }
-                }
-                currentVolume = newVolume;
-                Color_Mixed = new Color(red / (float)currentVolume,
-                    green / (float)currentVolume,
-                    blue / (float)currentVolume, alphaValue);
-            }
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -105,39 +160,69 @@ public class GlassContentsNew : MonoBehaviour
 
     public void EmptyContents()
     {
-        foreach (LiquidsCollection liquidsCollection in LiquidsCollList)
-        {
-            liquidsCollection.EmptyContents();
-        }      
+        //foreach (LiquidsCollection liquidsCollection in LiquidsCollList)
+        //{
+        //    liquidsCollection.EmptyContents();
+        //}      
+        LiquidsCollList.Clear();
+        currentVolume = 0;
     }
 
-    public void AddLiquid(LiquidType liquidType, double volumeAdded)
+    private void UpdateInfo()
     {
+        currentVolume = 0;
+        foreach (LiquidsCollection liquidsCollection in LiquidsCollList)
+        {
+            currentVolume += liquidsCollection.CombinedVolume;
+        }
+    }
+
+    public void MixAll()
+    {
+        if (LiquidsCollList.Count > 1)
+        {
+            double remainingVolume = maxVolume - currentVolume;
+            currentVolume = 0;
+            foreach (LiquidsCollection liquidsCollection in LiquidsCollList)
+            {
+                if (liquidsCollection != LiquidsCollList[1])
+                    LiquidsCollList[1].Combine(liquidsCollection, remainingVolume);
+                currentVolume += liquidsCollection.CombinedVolume;
+            }
+            LiquidsCollList.RemoveRange(1, LiquidsCollList.Count - 1);
+        }
+    }
+
+    public void AddLiquid(Liquid newLiquid)
+    {
+        AddLiquid(new LiquidsCollection(newLiquid));
+    }
+
+    public void AddLiquid(LiquidsCollection newLiquidsCollection)
+    {
+        // If there's no room, don't add anything
         if (currentVolume >= maxVolume)
             return;
 
-        //
-        if (LiquidsList != null)
+        // If the incoming liquid is the same as the top liquid, add to the volume of it
+        double remainingVolume = maxVolume - currentVolume;
+        if (LiquidsCollList[LiquidsCollList.Count - 1].SameLiquidMix(newLiquidsCollection))
         {
-            for (int i = 0; i < LiquidsList.Count; i++)
-            {
-                if (LiquidsList[i].liquidType == liquidType)
-                {
-                    LiquidsList[i].volume += volumeAdded;
-                    return;
-                }
-            }
+            LiquidsCollList[LiquidsCollList.Count - 1].Combine(newLiquidsCollection, remainingVolume);
         }
-        // else // liquids is null, or liquidType is not in list
+
+        // else the incoming liquid is different and will be added
+        else
         {
-            Liquid addedLiquid = new Liquid(liquidType, volumeAdded);
-            LiquidsList.Add(addedLiquid);
+            if (newLiquidsCollection.CombinedVolume > remainingVolume)
+                newLiquidsCollection.ResizeTotalVolume(remainingVolume);
+            LiquidsCollList.Add(newLiquidsCollection);
         }
     }
 
     public void RemoveLiquid(int index)
     {
-        LiquidsList.RemoveAt(index);
+        LiquidsCollList.RemoveAt(index);
     }
 
     // Update is called once per frame
@@ -155,47 +240,12 @@ public class GlassContentsNew : MonoBehaviour
         // Set the sprite in the animation, if array is exceeded use last frame
         if (currentVolumeLayer < spriteList.Length)
         {
-            m_SpriteRenderer.sprite = spriteList[currentVolumeLayer];
+            rendererList[0].sprite = spriteList[currentVolumeLayer];
         }
         else
         {
-            m_SpriteRenderer.sprite = spriteList[spriteList.Length - 1];
+            rendererList[0].sprite = spriteList[spriteList.Length - 1];
         }
 
-
-
-        // Set color from override or from mixed
-        if (OverrideColor)
-        {
-            m_SpriteRenderer.color = Color_Override;
-        }
-        else
-        {
-            //currentVolume = 0;
-            double newVolume = 0;
-            float red = 0, green = 0, blue = 0;
-
-            if (LiquidsList != null)// && liquids[0] != null)
-            {
-
-                //Debug.Log("Made it to if statement");
-                for (int i = 0; i < LiquidsList.Count; i++)
-                {
-                    if (LiquidsList[i].liquidType != null)
-                    {
-                        newVolume += LiquidsList[i].volume;
-                        red += LiquidsList[i].liquidType.liquidColor.r * (float)LiquidsList[i].volume;
-                        blue += LiquidsList[i].liquidType.liquidColor.b * (float)LiquidsList[i].volume;
-                        green += LiquidsList[i].liquidType.liquidColor.g * (float)LiquidsList[i].volume;
-                    }
-                }
-                currentVolume = newVolume;
-                Color_Mixed = new Color(red / (float)currentVolume,
-                    green / (float)currentVolume,
-                    blue / (float)currentVolume, alphaValue);
-            }
-
-            m_SpriteRenderer.color = Color_Mixed;
-        }
     }
 }
