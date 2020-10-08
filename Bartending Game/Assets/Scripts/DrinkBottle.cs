@@ -7,6 +7,7 @@ public class DrinkBottle : MonoBehaviour
     public InputMaster controls;
 
     public GlassContents currentGlass;
+    public GlassContentsv5 currentGlassV5;
     public LiquidType liquidType;
     public double volumeAddedPerClick = 0.1;
 
@@ -53,6 +54,7 @@ public class DrinkBottle : MonoBehaviour
     {
         if ((Time.time > downTime + waitTime) && mouseOver)
         {
+            currentGlassV5.AddLiquid(liquidType, volumeAddedPerClick);
             currentGlass.AddLiquid(liquidType, volumeAddedPerClick);
             downTime += waitTime;
         }
@@ -63,6 +65,7 @@ public class DrinkBottle : MonoBehaviour
         if ((Time.time > downTime + waitTime) && mouseOver)
         {
             Debug.Log("Adding " + volumeAddedPerClick + " of " + liquidType);
+            currentGlassV5.AddLiquid(liquidType, volumeAddedPerClick);
             currentGlass.AddLiquid(liquidType, volumeAddedPerClick);
             downTime = Time.time + waitTime;
         }

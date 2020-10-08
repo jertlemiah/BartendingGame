@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aceed2c8ab731d41b8fc5a9a3c09d38, type: 3}
   m_Name: Coke
   m_EditorClassIdentifier: 
-  liquidColor: {r: 0.3679245, g: 0.17051217, b: 0.029503385, a: 0.8862745}
+  liquidColor: {r: 0.3679245, g: 0.17051217, b: 0.029503385, a: 1}

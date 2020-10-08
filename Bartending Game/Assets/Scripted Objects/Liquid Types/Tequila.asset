@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aceed2c8ab731d41b8fc5a9a3c09d38, type: 3}
   m_Name: Tequila
   m_EditorClassIdentifier: 
-  liquidColor: {r: 0.6901961, g: 0.79215693, b: 0.8078432, a: 0}
+  liquidColor: {r: 0.6901961, g: 0.79215693, b: 0.8078432, a: 1}

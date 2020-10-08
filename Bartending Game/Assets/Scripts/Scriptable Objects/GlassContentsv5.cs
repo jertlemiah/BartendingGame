@@ -9,6 +9,7 @@ public class GlassContentsv5 : MonoBehaviour
         public Dictionary<LiquidType, double> LiquidProportions = new Dictionary<LiquidType, double>();
         public Color ColorMixed = Color.white;
         public double Volume = 0;
+        //public GameObject LayerObj;
 
         public LiquidMix() { }
 
@@ -16,6 +17,8 @@ public class GlassContentsv5 : MonoBehaviour
         {
             LiquidProportions.Add(liquid.liquidType, 1.0);
             Volume = liquid.volume;
+            UpdateInfo();
+            //LayerObj = Instantiate(LiquidLayerPrefab, new Vector3(0, 0, 0), Quaternion.identity)
         }
 
         public void EmptyContents()
@@ -130,23 +133,26 @@ public class GlassContentsv5 : MonoBehaviour
     }
 
     public GlassType glassType;
-    public SpriteRenderer m_SpriteRenderer;
+    //public SpriteRenderer m_SpriteRenderer;
 
-    public bool OverrideLevel = false;
-    public Sprite[] spriteList;
+    //public bool OverrideLevel = false;
+    //public Sprite[] spriteList;
+    public Sprite FullSprite;
+    public GameObject LiquidLayerPrefab;
+    public List<GameObject> LiquidLayerReferences;
 
     public int maxVolume = 1;           // in ounces
     public double currentVolume = 0;     // in ounces
-    public int currentVolumeLayer = 0;  // used for animations
+    //public int currentVolumeLayer = 0;  // used for animations
 
-    public float alphaValue = 0.5f;
+    //public float alphaValue = 0.5f;
 
     public List<LiquidMix> LiquidMixList = new List<LiquidMix>();//Liquid[] liquids;
 
-    public Color Color_Mixed = Color.white; // The color from mixing liquids
-    public bool OverrideColor = false;
-    public Color Color_Override = Color.white;        // The override color
-    float m_Red, m_Blue, m_Green;       // The values for the sliders for controlling the override color
+    //public Color Color_Mixed = Color.white; // The color from mixing liquids
+    //public bool OverrideColor = false;
+    //public Color Color_Override = Color.white;        // The override color
+    //float m_Red, m_Blue, m_Green;       // The values for the sliders for controlling the override color
 
     // Start is called before the first frame update
     void Start()
@@ -160,42 +166,92 @@ public class GlassContentsv5 : MonoBehaviour
     // this is only for testing. clicking on the glass will empty it
     private void OnMouseDown()
     {
-        LiquidMixList.Clear();
+        EmptyContents();
     }
 
     public void EmptyContents()
     {
         LiquidMixList.Clear();
+        foreach (GameObject obj in LiquidLayerReferences)
+        {
+            Destroy(obj);
+        }
+        LiquidLayerReferences.Clear();
     }
 
 
     public void AddLiquid(LiquidType liquidType, double volumeAdded)
     {
+        double remainingVolume = maxVolume - currentVolume;
+
         if (currentVolume >= maxVolume)
             return;
         else if (currentVolume + volumeAdded > maxVolume)
-            volumeAdded = maxVolume - currentVolume; 
+            volumeAdded = remainingVolume;
 
+        currentVolume += volumeAdded;
         LiquidMix newLiquidMix = new LiquidMix(new Liquid(liquidType, volumeAdded));
-        if(LiquidMixList[0] != null)
+
+        // If the top mix is the same recipe as the incoming, just update the proportions & volume
+        if(LiquidMixList.Count > 0 && false)
         {
             if (LiquidMixList[LiquidMixList.Count - 1].SameLiquidMix(newLiquidMix))
-            {
+                LiquidMixList[LiquidMixList.Count - 1].Combine(newLiquidMix, remainingVolume);
+            else
+                LiquidMixList.Add(newLiquidMix);
+        }
+        // Else add a new layer to the thing
+        else
+        {
+            LiquidMixList.Add(newLiquidMix);
 
-            }
+            //LiquidLayerReferences.Add(Instantiate(LiquidLayerPrefab , new Vector3(0, 0, 0), Quaternion.identity));
         }
 
 
     }
 
-    public void RemoveLiquid(int index)
-    {
-        LiquidMixList.RemoveAt(index);
-    }
+    //private void
 
+    //public void RemoveLiquid(int index)
+    //{
+    //    LiquidMixList.RemoveAt(index);
+    //}
+    public float SpriteOffset = 0;
+    public float ScalingFactor = 1;
     // Update is called once per frame
     void Update()
     {
+        int i = 0;
+        float liquidLevel = 0f;
+        foreach (LiquidMix liquidMix in LiquidMixList)
+        {
+            if (LiquidLayerReferences.Count < i + 1)//(LiquidLayerReferences[i] == null)
+            {
+                LiquidLayerReferences.Add(Instantiate(LiquidLayerPrefab, new Vector3(0, 0, 0), Quaternion.identity));
+                LiquidLayerReferences[i].transform.parent = gameObject.transform;
+                LiquidLayerReferences[i].transform.position = gameObject.transform.position;
+            }
+            SpriteRenderer spriteRenderer = LiquidLayerReferences[i].GetComponent<SpriteRenderer>();
+            spriteRenderer.material.SetColor("_Color", liquidMix.ColorMixed);
+            spriteRenderer.material.SetFloat("_LiquidLevel", (float)liquidLevel);
+            liquidLevel += (float)(liquidMix.Volume / maxVolume);
+            spriteRenderer.material.SetFloat("_Thickness", (float)(liquidMix.Volume / maxVolume));
+            spriteRenderer.material.SetFloat("_Offset", (float)SpriteOffset);
+            spriteRenderer.material.SetFloat("_ScalingFactor", (float)ScalingFactor);
+            //_ScalingFactor
+
+            //_Offset
+            //_Thickness
+            //_Color
+            //_LiquidLevel
+            i++;
+        }
+        //spriteRenderer = GetComponent<SpriteRenderer>();
+        //tempColor = spriteRenderer.material.GetColor("_Color");
+        //tempColor.a = 0;
+        //spriteRenderer.material.SetColor("_Color", tempColor);
+
         //https://answers.unity.com/questions/181903/jump-to-a-specific-frame-in-an-animation.html
         //https://forum.unity.com/threads/changing-sprite-during-run-time.211817/
 
@@ -216,6 +272,6 @@ public class GlassContentsv5 : MonoBehaviour
         //}
 
 
-        
+
     }
 }
