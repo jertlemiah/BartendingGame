@@ -193,10 +193,12 @@ public class GlassContentsv5 : MonoBehaviour
         LiquidMix newLiquidMix = new LiquidMix(new Liquid(liquidType, volumeAdded));
 
         // If the top mix is the same recipe as the incoming, just update the proportions & volume
-        if(LiquidMixList.Count > 0 && false)
+        if(LiquidMixList.Count > 0)
         {
             if (LiquidMixList[LiquidMixList.Count - 1].SameLiquidMix(newLiquidMix))
+            {
                 LiquidMixList[LiquidMixList.Count - 1].Combine(newLiquidMix, remainingVolume);
+            }
             else
                 LiquidMixList.Add(newLiquidMix);
         }

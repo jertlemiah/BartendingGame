@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class GameManagerScript : MonoBehaviour
+public class GameManagerScript : MonoBehaviour//Singleton<GameManagerScript>
 {
     public InputMaster controls;
     public float bottleRotationDegrees = 45;
