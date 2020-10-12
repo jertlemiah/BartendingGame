@@ -55,3 +55,6 @@ TagManager:
   - name: Characters
     uniqueID: 534303579
     locked: 0
+  - name: Tooltip
+    uniqueID: 3704863407
+    locked: 0
