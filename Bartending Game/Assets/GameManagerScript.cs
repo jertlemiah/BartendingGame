@@ -9,7 +9,7 @@ public class GameManagerScript : MonoBehaviour//Singleton<GameManagerScript>
     public float bottleRotationDegrees = 45;
     public float rotationDuration = 1;
     private bool useItem = false;
-    
+    public GlassContentsv5 currentGlass;
 
     GameObject heldObject;
 
@@ -49,6 +49,12 @@ public class GameManagerScript : MonoBehaviour//Singleton<GameManagerScript>
             }
         }
 
+    }
+
+    public void OnMixButtonClick()
+    {
+        Debug.Log("OnMixButtonClick has been clicked");
+        currentGlass.MixAll();
     }
 
     public void SetTotalLiquid(double newVolume)

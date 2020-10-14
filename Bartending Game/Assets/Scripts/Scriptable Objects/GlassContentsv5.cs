@@ -8,7 +8,7 @@ public class GlassContentsv5 : MonoBehaviour
     {
         public Dictionary<LiquidType, double> LiquidProportions = new Dictionary<LiquidType, double>();
         public Color ColorMixed = Color.white;
-        public double Volume = 0;
+        public double TotalVolume = 0;
         //public GameObject LayerObj;
 
         public LiquidMix() { }
@@ -16,7 +16,7 @@ public class GlassContentsv5 : MonoBehaviour
         public LiquidMix(Liquid liquid)
         {
             LiquidProportions.Add(liquid.liquidType, 1.0);
-            Volume = liquid.volume;
+            TotalVolume = liquid.volume;
             UpdateInfo();
             //LayerObj = Instantiate(LiquidLayerPrefab, new Vector3(0, 0, 0), Quaternion.identity)
         }
@@ -24,7 +24,7 @@ public class GlassContentsv5 : MonoBehaviour
         public void EmptyContents()
         {
             LiquidProportions.Clear();
-            Volume = 0;
+            TotalVolume = 0;
         }
 
         public bool SameLiquidMix(LiquidMix newLiquidMix)
@@ -46,7 +46,7 @@ public class GlassContentsv5 : MonoBehaviour
 
         public double UpdateVolume(double newTotalVolume)
         {
-            return Volume = newTotalVolume;
+            return TotalVolume = newTotalVolume;
         }
 
         public void Combine(LiquidMix newLiquidMix, double remainingSpace)
@@ -58,31 +58,35 @@ public class GlassContentsv5 : MonoBehaviour
             // Ignore volume requirements
             else if (remainingSpace == -1) { }
 
-            if (newLiquidMix.Volume > remainingSpace)
-                newLiquidMix.Volume = remainingSpace;
+            // If the incoming volume is greater than remaining space, change incoming volume amount
+            else if (newLiquidMix.TotalVolume > remainingSpace)
+                newLiquidMix.TotalVolume = remainingSpace;
 
+            // Using the total volume and the proportions of each liquidType, get the volume for each liquidType
             Dictionary<LiquidType, double> LiquidVolumes = new Dictionary<LiquidType, double>();
             foreach (KeyValuePair<LiquidType, double> entry in LiquidProportions)
-                LiquidVolumes.Add(entry.Key, entry.Value * Volume);
+                LiquidVolumes.Add(entry.Key, entry.Value * TotalVolume);
 
+            // Create new dictionary, loop through new list, add to current stuff
             Dictionary<LiquidType, double> newLiquidProportions = newLiquidMix.LiquidProportions;
             foreach (KeyValuePair<LiquidType, double> entry in newLiquidProportions)
             {
-                double entryVolume = entry.Value * newLiquidMix.Volume;
+                double entryVolume = entry.Value * newLiquidMix.TotalVolume;
                 if (LiquidVolumes.ContainsKey(entry.Key))
                     LiquidVolumes[entry.Key] += entryVolume;
                 else
                     LiquidVolumes.Add(entry.Key, entryVolume);
             }
 
-            ConvertVolumeToPorportions(LiquidVolumes);
+            UpdateProportionsGivenVolumes(LiquidVolumes);
+            UpdateInfo();
         }
 
-        private void ConvertVolumeToPorportions(Dictionary<LiquidType, double> LiquidVolumes)
+        private void UpdateProportionsGivenVolumes(Dictionary<LiquidType, double> LiquidVolumes)
         {
-            Volume = 0;
+            TotalVolume = 0;
             foreach (KeyValuePair<LiquidType, double> entry in LiquidVolumes)
-                Volume += entry.Value;
+                TotalVolume += entry.Value;
 
             LiquidProportions.Clear();
             double totalProportion = 1.0;
@@ -90,7 +94,7 @@ public class GlassContentsv5 : MonoBehaviour
             foreach (KeyValuePair<LiquidType, double> entry in LiquidVolumes)
             {
                 count++;
-                double proportion = System.Math.Round(entry.Value / Volume, 2);
+                double proportion = System.Math.Round(entry.Value / TotalVolume, 2);
 
                 // If its the last term, use all the remaining proportion so that it always sums to 1.00
                 if (count == LiquidVolumes.Count)
@@ -172,6 +176,12 @@ public class GlassContentsv5 : MonoBehaviour
     public void EmptyContents()
     {
         LiquidMixList.Clear();
+        DestroyLayerObjects();
+        currentVolume = 0;
+    }
+
+    public void DestroyLayerObjects()
+    {
         foreach (GameObject obj in LiquidLayerReferences)
         {
             Destroy(obj);
@@ -179,6 +189,49 @@ public class GlassContentsv5 : MonoBehaviour
         LiquidLayerReferences.Clear();
     }
 
+    public void MixAll()
+    {
+        if (LiquidMixList.Count > 1)
+        {
+            double remainingVolume = maxVolume - currentVolume;
+            //currentVolume = 0;
+            foreach (LiquidMix liquidMix in LiquidMixList)
+            {
+                // For each liquidMix that is not the first, combine with the first
+                if (liquidMix != LiquidMixList[0])
+                    LiquidMixList[0].Combine(liquidMix, -1);
+                //LiquidMixList[1].Combine(liquidMix, remainingVolume);
+                //currentVolume += liquidMix.Volume;
+
+            }
+            LiquidMixList.RemoveRange(1, LiquidMixList.Count - 1);
+
+            DestroyLayerObjects();
+
+            //foreach (GameObject obj in LiquidLayerReferences)
+            //{
+            //    if (obj != LiquidLayerReferences[0])
+            //        Destroy(obj);
+            //}
+            //LiquidLayerReferences.RemoveRange(1, LiquidLayerReferences.Count - 1);
+        }
+    }
+
+    //public void MixAll()
+    //{
+    //    if (LiquidsCollList.Count > 1)
+    //    {
+    //        double remainingVolume = maxVolume - currentVolume;
+    //        currentVolume = 0;
+    //        foreach (LiquidsCollection liquidsCollection in LiquidsCollList)
+    //        {
+    //            if (liquidsCollection != LiquidsCollList[1])
+    //                LiquidsCollList[1].Combine(liquidsCollection, remainingVolume);
+    //            currentVolume += liquidsCollection.CombinedVolume;
+    //        }
+    //        LiquidsCollList.RemoveRange(1, LiquidsCollList.Count - 1);
+    //    }
+    //}
 
     public void AddLiquid(LiquidType liquidType, double volumeAdded)
     {
@@ -237,8 +290,8 @@ public class GlassContentsv5 : MonoBehaviour
             SpriteRenderer spriteRenderer = LiquidLayerReferences[i].GetComponent<SpriteRenderer>();
             spriteRenderer.material.SetColor("_Color", liquidMix.ColorMixed);
             spriteRenderer.material.SetFloat("_LiquidLevel", (float)liquidLevel);
-            liquidLevel += (float)(liquidMix.Volume / maxVolume);
-            spriteRenderer.material.SetFloat("_Thickness", (float)(liquidMix.Volume / maxVolume));
+            liquidLevel += (float)(liquidMix.TotalVolume / maxVolume);
+            spriteRenderer.material.SetFloat("_Thickness", (float)(liquidMix.TotalVolume / maxVolume));
             spriteRenderer.material.SetFloat("_Offset", (float)SpriteOffset);
             spriteRenderer.material.SetFloat("_ScalingFactor", (float)ScalingFactor);
             //_ScalingFactor
