@@ -165,7 +165,10 @@ public class GlassContentsv5 : MonoBehaviour
 
     }
 
+    void EvaluateDrink(GlassContentsv5 recipe)
+    {
 
+    }
 
     // this is only for testing. clicking on the glass will empty it
     private void OnMouseDown()
