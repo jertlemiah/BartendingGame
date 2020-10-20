@@ -7,6 +7,7 @@ public class DrinkRecipe : ScriptableObject
 {
     public GlassType glassType;
     public List<Liquid> LiquidsList = new List<Liquid>();
+    public List<string> AccentsList = new List<string>();
     // list of accents, need to figure out how I want to handle that
 
 
@@ -16,7 +17,7 @@ public class DrinkRecipe : ScriptableObject
         //LiquidType = LiquidToAdd
         foreach (Liquid liquid in LiquidsList)
         {
-            if(liquid.liquidType == liquidToRemove.liquidType)
+            if (liquid.liquidType == liquidToRemove.liquidType)
             {
                 liquid.liquidType = liquidToAdd.liquidType;
                 break;
@@ -36,12 +37,12 @@ public class DrinkRecipe : ScriptableObject
         }
     }
 
-    public void AddLiquid (Liquid liquidToAdd)
+    public void AddLiquid(Liquid liquidToAdd)
     {
         LiquidsList.Add(liquidToAdd);
     }
 
-    public void RemoveLiquid (Liquid liquidToRemove)
+    public void RemoveLiquid(Liquid liquidToRemove)
     {
         foreach (Liquid liquid in LiquidsList)
         {

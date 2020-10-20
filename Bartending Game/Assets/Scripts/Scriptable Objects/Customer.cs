@@ -10,10 +10,10 @@ public class Customer : ScriptableObject
 
     public void EvaluateDrink(GlassContents givenDrink)
     {
-        foreach (Liquid liquid in order.LiquidsList)
-        {
+        //foreach (Liquid liquid in order.LiquidsList)
+        //{
 
-        }
+        //}
     //        If(correct glass)
     //Then good, extra tip
     //Else if (correct glass family)
